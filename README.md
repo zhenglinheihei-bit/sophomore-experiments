@@ -1,6 +1,6 @@
 # 🧪 大二实验 —— ESP32 嵌入式实验集
 
-[![CI](https://github.com/zhenglinheihei-bit/%E5%A4%A7%E4%BA%8C%E5%AE%9E%E9%AA%8C/actions/workflows/ci.yml/badge.svg)](https://github.com/zhenglinheihei-bit/大二实验/actions/workflows/ci.yml)
+[![CI](https://github.com/zhenglinheihei-bit/sophomore-experiments/actions/workflows/ci.yml/badge.svg)](https://github.com/zhenglinheihei-bit/sophomore-experiments/actions/workflows/ci.yml)
 
 一套基于 **ESP32 (Arduino 框架)** 的嵌入式小实验。每个子文件夹是一个**独立可烧录**的 PlatformIO 工程，由浅入深：从点灯、触摸，到 WiFi、Web 服务、传感器。
 
@@ -21,7 +21,7 @@
 ## 📁 目录结构
 
 ```text
-大二实验/
+sophomore-experiments/
 ├── 01-weather-station/       # 实验一：小小气象站
 ├── 02-touch-breathing-lamp/  # 实验二：触摸呼吸灯
 ├── 03-wifi-scanner/          # 实验三：WiFi 信号扫描仪
@@ -48,7 +48,7 @@ pio run -d 02-touch-breathing-lamp -t upload
 pio device monitor -d 02-touch-breathing-lamp
 ```
 
-> 本地文件夹若用中文名，个别版本的 PlatformIO 工具链可能报编码错误；仓库根目录用英文名 `sophomore-experiments`，GitHub 仓库名仍是「大二实验」。
+> GitHub 仓库名不支持中文，故仓库名用拼音含义的 `sophomore-experiments`，本地文件夹同名；「大二实验」见本 README 标题与仓库简介。本地操作 PlatformIO 时请避免把工程放在中文路径下，个别工具链版本会报编码错误。
 
 ## ✍️ 写实验报告的小建议
 
