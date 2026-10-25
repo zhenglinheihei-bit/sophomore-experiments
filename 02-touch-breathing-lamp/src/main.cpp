@@ -9,8 +9,20 @@
 #include <Arduino.h>
 
 #define LED_PIN      2
-#define PWM_CHANNEL  0
 #define PWM_FREQ     5000    // 5kHz PWM，8 位分辨率（0~255）
+
+// LEDC PWM：Arduino-ESP32 核心 2.x 与 3.x 的函数接口不同，这里封装成统一写法
+#if ESP_ARDUINO_VERSION_MAJOR >= 3
+void pwmSetup() { ledcAttach(LED_PIN, PWM_FREQ, 8); }
+void pwmWrite(uint8_t duty) { ledcWrite(LED_PIN, duty); }
+#else
+#define PWM_CHANNEL 0
+void pwmSetup() {
+  ledcSetup(PWM_CHANNEL, PWM_FREQ, 8);
+  ledcAttachPin(LED_PIN, PWM_CHANNEL);
+}
+void pwmWrite(uint8_t duty) { ledcWrite(PWM_CHANNEL, duty); }
+#endif
 
 // 显示模式
 enum LampMode { MODE_BREATH_SLOW, MODE_BREATH_FAST, MODE_HEARTBEAT, MODE_OFF, MODE_COUNT };
@@ -51,9 +63,8 @@ void setup() {
   Serial.begin(115200);
   delay(300);
 
-  ledcSetup(PWM_CHANNEL, PWM_FREQ, 8);
-  ledcAttachPin(LED_PIN, PWM_CHANNEL);
-  ledcWrite(PWM_CHANNEL, 0);
+  pwmSetup();
+  pwmWrite(0);
 
   // 开机 2 秒自动校准触摸基准（期间不要碰 T0/GPIO4）
   Serial.println("[校准] 采集触摸基准值，请不要触摸 T0 (GPIO4) ...");
@@ -90,7 +101,7 @@ void loop() {
     case MODE_HEARTBEAT:   duty = heartbeatDuty(now);    break;
     default:               duty = 0;                     break;
   }
-  ledcWrite(PWM_CHANNEL, duty);
+  pwmWrite(duty);
 
   delay(10);   // 约 100Hz 刷新，肉眼完全流畅
 }
