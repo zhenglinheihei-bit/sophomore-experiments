@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - 01-weather-station
+          - 02-touch-breathing-lamp
+          - 03-wifi-scanner
+          - 04-ultrasonic-ranger
+    name: 编译 ${{ matrix.project }}
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装 PlatformIO
+        run: pip install platformio
+
+      - name: 编译固件
+        run: pio run -d ${{ matrix.project }}

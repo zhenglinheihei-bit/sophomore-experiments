@@ -1,0 +1,17 @@
+# PlatformIO
+.pio/
+.vscode/
+
+# 编译产物（任意层级）
+build/
+*.bin
+*.elf
+*.hex
+
+# 本机 WiFi 配置（不要提交真实密码）
+**/include/secrets.h
+
+# 系统与编辑器杂项
+.DS_Store
+Thumbs.db
+*.swp
